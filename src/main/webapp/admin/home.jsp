@@ -38,22 +38,86 @@
         font-size: 12px;
         max-width: 100%;
 	}
+.container { margin-top: 30px; margin-bottom: 50px;}
+.head_aticle { margin: 20px 10px; }
+
+.ico {
+	float: right;
+	width: 16px;
+	height: 14px;
+	margin: 5px 14px 0 0;
+	cursor: pointer;
+	background:
+		url(https://res.kurly.com/pc/service/common/1908/ico_gnb_all_off.png)
+		no-repeat
+}
+
+.dropdown {
+	float: right;
+	position: relative;
+	display: inline-block;
+	margin-top: 30px;
+}
+.dropdown-content {
+ 	display: none;
+	position: absolute;
+	background-color: #fff;
+	min-width: 160px;
+ 	overflow: auto;
+  	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  	z-index: 1;
+  	margin-top: 30px;
+  	right: 0;
+  	font-size:13px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {
+	color: #5f0080;
+	font-weight: bold;
+}
+.tit :hover {
+	color: #5f0080;
+	font-weight: bold;
+}
+
+.show {display: block;}
 </style>
 </head>
 <body>	
 <div class="container">
+
 	<!-- header -->
 	<div class="row">
 		<div id="headerLogo" class="layout-wrapper">
+				<!-- category -->
+				<div class="dropdown">
+					<span id="dropbtn" class="ico" onclick="dropdownFn()"></span>
+					<div id="myDropdown" class="dropdown-content">
+						<a href="userlist.jsp">회원관리</a>
+						<a href="booklist.jsp">도서관리</a>
+						<a href="inquirylist.jsp">문의관리</a>
+						<a href="orderlist.jsp">주문관리</a>
+					</div>
+				</div>
+				
+				<!-- logo -->
 				<a href="http://localhost/marketbooks/home.jsp" class="link_main">
 					<span id="gnbLogoContainer"></span> 
 					<img src="/marketbooks/images/marketbooks-logo.png" class="img-thumbnail" style="border:0; width:120px;">
 				</a>
+				
 				<h2 class="text-center"><strong>관리자 페이지</strong></h2>
    				<div class="text-center my-3">회원관리, 도서관리, 문의관리, 주문관리를 할 수 있는 관리자 페이지 입니다.</div>
 		</div>
 	</div>
-	
+	 
 	<!-- main -->
 	<div class="admin_main">
 	<!-- 각 메뉴마다 최신글 3개만 메인에서 확인할 수 있게 합니다. -->
@@ -74,6 +138,7 @@
 			<form class="col-12 g-3 bg-light mx-1">
 				<div class="head_aticle">
 					<h2 class="tit"><a href="orderlist.jsp">주문관리</a></h2>
+					<span></span>
 				</div>
 				<!--  <div class="text-center"><h4><a href="orderlist.jsp">주문관리</a></h4></div> -->
 				<table width="100%" class="xans-board-listheader" cellpadding="0" cellspacing="0">
@@ -224,8 +289,8 @@
 			   </div>
 			</form>
 			
-			<div style="height:10px"></div>
-			
+		</div>
+		<div class="row my-2">	
 	   		<div class="col-12 d-flex px-0">
 	   		<form class="col-6 g-3 bg-light mx-1 flex-fill px-2">
 				<div class="head_aticle">
@@ -269,7 +334,7 @@
 			   <hr>
 			</form>
 	   		
-	   		<form class="col-6 g-3 bg-light mx-1 flex-fill px-2">
+	   		<form class="col-6 g-3 bg-light flex-fill px-2" style="margin-left:5px">
 				<div class="head_aticle">
 					<h2 class="tit"><a href="userlist.jsp">회원관리</a></h2>
 				</div>
@@ -308,10 +373,33 @@
   			</div>
   		</div>
   		
-   		
+   	
+		</div>
    </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+	/* When the user clicks on the button, 
+	toggle between hiding and showing the dropdown content */
+	function dropdownFn() {
+	  document.getElementById("myDropdown").classList.toggle("show");
+	}
+	
+	// Close the dropdown if the user clicks outside of it
+	window.onclick = function(event) {
+	  if (!event.target.matches('#dropbtn')) {
+	    var dropdowns = document.getElementsByClassName("dropdown-content");
+	    var i;
+	    for (i = 0; i < dropdowns.length; i++) {
+	      var openDropdown = dropdowns[i];
+	      if (openDropdown.classList.contains('show')) {
+	        openDropdown.classList.remove('show');
+	      }
+	    }
+	  }
+	}
+</script>
 </body>
 </html>
 <%			

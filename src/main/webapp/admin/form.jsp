@@ -99,14 +99,19 @@
 								<label class="form-label">책이름</label>
 								<input class="form-control" type="text" name="title" />
 							</div>
-							<div class="col-6">
+							
+							<div class="col-4">
 								<label class="form-label">저자</label>
 								<input class="form-control" type="text" name="author" />
 							</div>
 							
-							<div class="col-6">
+							<div class="col-4">
 								<label class="form-label">출판사</label>
 								<input class="form-control" type="text" name="publisher" />
+							</div>
+							<div class="col-4">
+								<label class="form-label">출간일</label>
+								<input class="form-control" type="date" name="createdDate" id="Date"/>
 							</div>
 							
 							<div class="col-5">
@@ -143,33 +148,45 @@
 	</div>
 </div>
 <script type="text/javascript">
-	function submitAddForm() {
-		let titleField = document.querySelector("input[name=title]");
-		if (titleField.value === '') {
-			alert("도서 제목은 필수입력값입니다.");
-			titleField.focus();
-			return false;
-		}
-		let authorField = document.querySelector("input[name=author]");
-		if (authorField.value === '') {
-			alert("도서 저자는 필수입력값입니다.");
-			authorField.focus();
-			return false;
-		}
-		let publisherField = document.querySelector("input[name=publisher]");
-		if (publisherField.value === '') {
-			alert("도서 저자는 필수입력값입니다.");
-			publisherField.focus();
-			return false;
-		}
-		let priceField = document.querySelector("input[name=price]");
-		if (priceField.value === '') {
-			alert("도서 가격은 필수입력값입니다.");
-			priceField.focus();
-			return false;
-		}
-		return true;
+/* 출간일 설정 - 오늘 날짜 이후로 선택할 수 없게 만듦 */
+// 지금 날짜를 밀리초로 설정
+var now = Date.now()
+// getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
+var timeOff = new Date().getTimezoneOffset()*60000;		// 분단위를 밀리초로 변환
+// new Date(now).toISOString()은 현재를 기준으로 '연도-월-일T시간:분:초.밀리초Z'를 반환합니다.
+// 		T를 기준으로 split하고 앞부분을 today에 저장
+var today = new Date(now-timeOff).toISOString().split("T")[0];
+// input태그에서 max값으로 today값을 주었다.
+document.getElementById("Date").setAttribute("max", today);
+
+/* 유효성 검사 */
+function submitAddForm() {
+	let titleField = document.querySelector("input[name=title]");
+	if (titleField.value === '') {
+		alert("도서 제목은 필수입력값입니다.");
+		titleField.focus();
+		return false;
 	}
+	let authorField = document.querySelector("input[name=author]");
+	if (authorField.value === '') {
+		alert("도서 저자는 필수입력값입니다.");
+		authorField.focus();
+		return false;
+	}
+	let publisherField = document.querySelector("input[name=publisher]");
+	if (publisherField.value === '') {
+		alert("도서 저자는 필수입력값입니다.");
+		publisherField.focus();
+		return false;
+	}
+	let priceField = document.querySelector("input[name=price]");
+	if (priceField.value === '') {
+		alert("도서 가격은 필수입력값입니다.");
+		priceField.focus();
+		return false;
+	}
+	return true;
+}
 </script>
 </body>
 </html>

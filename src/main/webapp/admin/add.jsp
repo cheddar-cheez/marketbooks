@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="dao.BookDao"%>
 <%@page import="vo.Category"%>
 <%@page import="vo.Book"%>
@@ -21,6 +22,11 @@
 	int discountPrice = StringUtil.stringToInt(mr.getParameter("discount-price"));
 	int stock = StringUtil.stringToInt(mr.getParameter("stock"));
 	String discription = mr.getParameter("discription");
+	String createdDate = mr.getParameter("createdDate");
+	
+	// String 타입의 출간일 Date로 변환하기
+	DateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+	Date alt_createdDate = date.parse(createdDate);
 	
 	// book객체를 생성해서 도서 정보를 저장한다.
 	Book book = new Book();
@@ -31,7 +37,8 @@
 	book.setPrice(price);
 	book.setDiscountPrice(discountPrice);
 	book.setStock(stock);
-	book.setDiscountPrice(discountPrice);
+	book.setDescription(discription);
+	book.setCreatedDate(alt_createdDate);
 	
 	// 도서 정보를 데이터베이스에 저장시킨다.
 	BookDao bookDao = BookDao.getInstance();

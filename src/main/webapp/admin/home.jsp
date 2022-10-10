@@ -155,7 +155,7 @@
 			   			<tr>
 			   				<th>주문번호</th>
 			   				<th>구매자</th>
-			   				<th>주문도서</th>
+			   				<th>주문리스트</th>
 			   				<th>주문수량</th>
 			   				<th>결제금액</th>
 			   				<th>상태</th>
@@ -168,9 +168,10 @@
 			   		%>
 			   			<tr>
 			   				<td><%=order.getNo() %></td>
-			   				<!-- 구매자의 이름을 누르면 구매자가 구매한 리스트들을 확인할 수 있다. -->
-			   				<td><a href="userorder.jsp?no=<%=order.getUserNo()%>"><%=order.getUser().getName() %></a></td>
-			   				<td><%=order.getTitle() %></td>
+			   				<!-- 구매자의 이름을 누르면 구매자의 정보를 확인할 수 있다. -->
+			   				<td><a href="user.jsp?no=<%=order.getUserNo()%>"><%=order.getUser().getName() %></a></td>
+			   				<!-- 주문리스트 이름을 누르면 구매자가 구매한 도서 리스트들을 확인할 수 있다. -->
+			   				<td><a href="userorder.jsp?no=<%=order.getNo()%>"><%=order.getTitle() %></a></td>
 			   				<td><%=order.getTotalQuantity() %></td>
 			   				<td><%=order.getTotalPrice() %>원</td>
 			   				<!-- 주문 상태 : 주문취소/입금대기/배송완료/입금대기 -->
@@ -220,7 +221,6 @@
 				   				<td><%=inq.getUserName() %></td>
 				   				<td><%=inq.getCreatedDate() %></td>
 				   				<td><%=inq.getAnswerCreatedDate() %></td>
-				   				<!-- 답변대기 상태일 때는 다른색 글씨로(빨간색 혹은 회색) -->
 				   				<td><%=inq.getAnswerStatus() %></td>
 				   			</tr>
 				   		<%
@@ -230,62 +230,7 @@
 				   </table>
 			   </div>
 			   <hr>
-			   
-			   <!-- 상품문의관리 -->
-			   <!--  
-			   <div style="height:50px"></div>
-			   <div>
-			   <div class="head_aticle text-center"><h6>상품문의</h6></div>
-			   <table width="100%" class="xans-board-listheader" cellpadding="0" cellspacing="0">
-			   		<colgroup>
-			   			<col width="7%">
-			   			<col width="%">
-			   			<col width="10%">
-			   			<col width="16%">
-			   			<col width="14%">
-			   			<col width="14%">
-			   		</colgroup>
-			   		<thead>
-			   			<tr>
-			   				<th>번호</th>
-			   				<th>문의제목</th>
-			   				<th>회원명</th>
-			   				<th>작성날짜</th>
-			   				<th>답변날짜</th>
-			   				<th>답변유무</th>
-			   			</tr>
-			   		</thead>
-			   		<tbody class="table-group-divider">
-			   			<tr>
-			   				<td>1</td>
-			   				<!-- 문의제목을 누르면 상품문의페이지로 넘어갑니다. 상품문의답변은 댓글 작성으로 처리 --> <!-- 
-			   				<td><a href="bookinquiry.jsp">상품문의 답변은 1:1답변과 다른 방식으로 나오게 하는게 좋을까요?</a></td>
-			   				<td>홍길동</td>
-			   				<td>2022-06-13</td>
-			   				<td>2022-06-13</td>
-			   				<td>답변대기</td>
-			   			</tr>
-			   			<tr>
-			   				<td>1</td>
-			   				<!-- 문의제목을 누르면 상품문의페이지로 넘어갑니다. 상품문의답변은 댓글 작성으로 처리 --> <!-- 
-			   				<td><a href="bookinquiry.jsp">상품문의 답변은 1:1답변과 다른 방식으로 나오게 하는게 좋을까요?</a></td>
-			   				<td>홍길동</td>
-			   				<td>2022-06-13</td>
-			   				<td>2022-06-13</td>
-			   				<td>답변대기</td>
-			   			</tr><tr>
-			   				<td>1</td>
-			   				<!-- 문의제목을 누르면 상품문의페이지로 넘어갑니다. 상품문의답변은 댓글 작성으로 처리 --> <!-- 
-			   				<td><a href="bookinquiry.jsp">상품문의 답변은 1:1답변과 다른 방식으로 나오게 하는게 좋을까요?</a></td>
-			   				<td>홍길동</td>
-			   				<td>2022-06-13</td>
-			   				<td>2022-06-13</td>
-			   				<td>답변대기</td>
-			   			</tr>
-			   		</tbody>
-			   </table>
-			   <hr>
-			   -->
+			  
 			   </div>
 			</form>
 			
@@ -305,7 +250,6 @@
 			   		</colgroup>
 			   		<thead>
 			   			<tr class="text-center">
-			   				<!-- 간략한 도서리스트만 보이도록합니다. 상세한 도서정보 페이지는 따로 만들지 않고 상품페이지로 연결합니다. -->
 			   				<th>도서번호</th>
 			   				<th>도서명</th>
 			   				<th>재고</th>
@@ -359,7 +303,7 @@
 			   		%>
 			   			<tr>
 			   				<td><%=user.getNo() %></td>
-			   				<td><%=user.getName()%></td>
+			   				<td><a href="user.jsp?no=<%=user.getNo()%>"><%=user.getName()%></a></td>
 			   				<td><%=user.getEmail() %></td>
 			   				<td><%=user.getTel() %></td>
 			   			</tr>

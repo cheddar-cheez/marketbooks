@@ -61,7 +61,7 @@ public class BookDao {
 				+ "             row_number() over (order by book_no desc) row_number " + "      from hta_books "
 				+ "      where book_deleted = 'N') B, hta_book_categories C "
 				+ "where B.row_number >= ? and B.row_number <= ? " + "and B.category_no = C.category_no "
-				+ "order by B.book_no asc ";
+				+ "order by B.book_no desc ";
 
 		return helper.selectList(sql, rs -> {
 			Book book = new Book();
@@ -185,7 +185,6 @@ public class BookDao {
 				book.getCreatedDate(), book.getUpdatedDate());
 	}
 	
-	
 	public void updateBook(Book book) throws SQLException {
 		String sql = "update hta_books "
 					+ "set "
@@ -203,31 +202,7 @@ public class BookDao {
 					+ "where book_no = ? ";
 		
 		helper.update(sql, book.getCategoryNo(), book.getTitle(), book.getAuthor(), book.getPublisher(), 
-				book.getDescription(), book.getPrice(), book.getDiscountPrice(), book.getOnSell(), book.getStock(), book.getDeleted(), book.getNo());
-	}
-	
-	/**
-	 * 관리자 페이지에서 도서 정보를 수정합니다.
-	 * @param book
-	 * @throws SQLException
-	 */
-	public void modifyBook(Book book) throws SQLException {
-		String sql = "update hta_books "
-				+ "set "
-				+ "		category_no = ?, "
-				+ "		book_title = ?, "
-				+ "		book_author = ?, "
-				+ "		book_publisher= ?, "
-				+ "		book_description = ?, "
-				+ "		book_price = ?,	"
-				+ "		book_discount_price = ?, "
-				+ "		book_stock = ?, "
-				+ "     book_created_date = ?, "
-				+ "		book_updated_date = sysdate "
-				+ "where book_no = ? ";
-		
-		helper.update(sql, book.getCategoryNo(), book.getTitle(), book.getAuthor(), book.getPublisher(), 
-				book.getDescription(), book.getPrice(), book.getDiscountPrice(), book.getStock(), book.getCreatedDate(), book.getNo());
+				           book.getDescription(), book.getPrice(), book.getDiscountPrice(), book.getOnSell(), book.getStock(), book.getDeleted(), book.getNo());
 	}
 	
 	public Book getBookByNo(int bookNo) throws SQLException {
@@ -298,7 +273,8 @@ public class BookDao {
 				   + "from (select book_no, category_no, book_title, book_author, book_publisher, book_discount_price, book_price, book_created_date, book_stock, "
 				   + "             row_number() over (order by book_no desc) row_number " + "      from hta_books "
 				   + "      where book_deleted = 'N') B, hta_book_categories C "
-				   + "where B.row_number >= ? and B.row_number <= ? " + "and B.category_no = C.category_no ";
+				   + "where B.row_number >= ? and B.row_number <= ? " + "and B.category_no = C.category_no "
+				   + "order by book_no desc ";
 		
 		List<Book> recentBook = new ArrayList<>();
 		

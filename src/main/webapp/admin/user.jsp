@@ -104,7 +104,7 @@
    		
    		int totalRows = userDao.getTotalRows();
    		
-   // -- userNo로 User정보 조회
+   		// userNo로 User정보 조회
    		User user = userDao.getUserByNo(userNo);
    		
    		if (user == null) {
@@ -112,8 +112,19 @@
    		}
    %>
    		<div style="height:20px"></div>
-   		<div>
-   		<h2>[ <%=user.getName() %> ] 님의 상세정보</h2>
+   		<div class="row">
+   		<%
+   			if ("N".equals(user.getDeleted())) {
+   		%>
+   			<h2>[ <%=user.getName() %> ] 님의 상세정보</h2>   		
+   		<%	
+   			} else {
+   		%>
+   			<div class="col-10"><h2 style="text-decoration:line-through double red">[ <%=user.getName() %> ] 님의 상세정보</h2></div>
+   			<div class="col-2 my-auto" style="color:red"><strong>탈퇴된 회원입니다.</strong></div>
+   		<%		
+   			}
+   		%>
    		</div>
    		<table width="100%" align="center" cellpadding="0" cellspacing="0">
    		<tbody>
@@ -161,8 +172,22 @@
 				 				<tr scope="row">
 				 					<th style="font-size:14px">가입일</th>
 				 					<td class="text-start"><%=user.getCreatedDate() %></td>
+				 					
+				 				<!-- 최근 정보 수정일이 null일 경우에는 가입일 출력 -->
 				 					<th style="font-size:14px">최근정보수정일</th>
-				 					<td class="text-start"><%=user.getUpdatedDate() %></td>
+				 					<td class="text-start">
+				 				<%
+				 					if (user.getUpdatedDate() != null) {
+				 				%>
+				 						<%=user.getUpdatedDate() %>
+				 				<%
+				 					} else {
+				 				%>
+				 						<%=user.getCreatedDate() %>
+				 				<%
+				 					}
+				 				%>
+				 					</td>
 				 				</tr>
 				 			</thead>
 				 		</table>
@@ -171,9 +196,17 @@
 			 		<div>
 						<%
 							OrderDao orderDao = OrderDao.getInstance();
-						%>
-						
+				
+				   			if ("N".equals(user.getDeleted())) {
+				   		%>
 				 		<h2>[ <%=user.getName() %> ] 님의 최근 주문 내역</h2>
+				 		<%
+				   			} else {
+				   		%>
+				   		<h2 style="text-decoration:line-through double red">[ <%=user.getName() %> ] 님의 최근 주문 내역</h2>
+				   		<%		
+				   			}
+				 		%>
 				 		<div class="xans-element- xans-myshop xans-myshop-couponserial ">
 							<table width="100%" class="xans-board-listheader" cellpadding="0" cellspacing="0">
 					 		

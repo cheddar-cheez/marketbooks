@@ -89,40 +89,55 @@
 						// 도서 정보를 조회한다.
 						BookDao bookDao = BookDao.getInstance();
 						Book book = bookDao.getBookByNo(bookNo);
+						
+						// 카테고리 정보를 조회한다.
+						CategoryDao categoryDao = CategoryDao.getInstance();
+						Category cate = categoryDao.getCategoryName(bookNo);
+			
 						if(book == null) {
 							throw new RuntimeException("도서 정보가 존재하지 않습니다.");
 						}
 					%>
-						<form class="row g-3 border bg-light mx-1" method="post" action="modify.jsp" enctype="multipart/form-data" onsubmit="return submitAddForm()">
+						<form class="row g-3 border bg-light mx-1" method="post" action="modify.jsp?bookNo=<%=book.getNo() %>" onsubmit="return submitModifyForm()">
+						<!--  enctype="multipart/form-data" 속성은 파일이나 이미지를 서버로 전송할 때 사용한다. 수정에는 파일전송을 넣지 않음-->
 							<div class="col-12">
 								<label class="form-label">카테고리</label>
 								<select class="form-select" id="top-category-combobox" name="categoryNo">
-									<option selected="selected" disabled="disabled">선택하세요</option>
+									<option selected="selected" value="<%=book.getCategoryNo() %>"><%=cate.getName() %></option>
 									<%
-										CategoryDao categoryDao = CategoryDao.getInstance();
 										List<Category> categories = categoryDao.getAllCategories();
 										
 										for(Category cat : categories) {
 									%>
-											<option value="<%=cat.getNo()%>"><%=cat.getName() %></option>
+											<option id="category" value="<%=cat.getNo()%>"><%=cat.getName() %></option>
 									<%
 										}
 									%>
 								</select>
 							</div>
 							
-							<div class="col-12">
+							<div class="col-1">
+								<label class="form-label">책번호</label>
+								<input class="form-control" type="text" name="bookNo" value="<%=book.getNo() %>" disabled />
+							</div>
+							<div class="col-11">
 								<label class="form-label">책이름</label>
 								<input class="form-control" type="text" name="title" value="<%=book.getTitle() %>" />
 							</div>
-							<div class="col-6">
+							
+							<div class="col-4">
 								<label class="form-label">저자</label>
 								<input class="form-control" type="text" name="author" value="<%=book.getAuthor()%>"/>
 							</div>
 							
-							<div class="col-6">
+							<div class="col-4">
 								<label class="form-label">출판사</label>
 								<input class="form-control" type="text" name="publisher" value="<%=book.getPublisher()%>"/>
+							</div>
+							
+							<div class="col-4">
+								<label class="form-label">출간일</label>
+								<input class="form-control" type="date" name="createdDate" value="<%=book.getCreatedDate()%>"/>
 							</div>
 							
 							<div class="col-5">
@@ -141,7 +156,7 @@
 							
 							<div class="col-12">
 								<label class="form-label">도서 설명</label>
-								<textarea rows="10" class="form-control" name="discription" value="<%=book.getDescription() %>"></textarea>
+								<textarea rows="10" class="form-control" name="discription"><%=book.getDescription() %></textarea>
 							</div>
 						<!--  책 이미지 업로드
 							<div class="col-12">
@@ -161,7 +176,8 @@
 	</div>
 </div>
 <script type="text/javascript">
-	function submitAddForm() {
+
+	function submitModifyForm() {	
 		let titleField = document.querySelector("input[name=title]");
 		if (titleField.value === '') {
 			alert("도서 제목은 필수입력값입니다.");

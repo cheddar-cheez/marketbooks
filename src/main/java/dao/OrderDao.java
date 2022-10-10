@@ -295,16 +295,22 @@ public class OrderDao {
 	 * @throws SQLException
 	 */
 	public Order getOrderByNo(int orderNo) throws SQLException {
-		String sql = "SELECT ORDER_NO, USER_NO, ORDER_TITLE, ORDER_TOTAL_PRICE, ORDER_TOTAL_PAY_PRICE, ORDER_TOTAL_QUANTITY, ORDER_CREATED_DATE, ORDER_UPDATED_DATE, "
-					+ "ORDER_STATUS, ORDER_PAY_METHOD, ADDRESS_NO, IS_FREE_SHIPPING "
-					+ "FROM HTA_ORDERS "
-					+ "WHERE ORDER_NO = ? ";
+		String sql = "SELECT O.ORDER_NO, U.USER_NO, U.USER_NAME, O.ORDER_TITLE, O.ORDER_TOTAL_PRICE, O.ORDER_TOTAL_PAY_PRICE, O.ORDER_TOTAL_QUANTITY, O.ORDER_CREATED_DATE, O.ORDER_UPDATED_DATE, "
+				    + "O.ORDER_STATUS, O.ORDER_PAY_METHOD, O.ADDRESS_NO, O.IS_FREE_SHIPPING "
+					+ "FROM HTA_ORDERS O, HTA_USERS U "
+					+ "WHERE O.ORDER_NO = ? "
+					+ "AND O.USER_NO = U.USER_NO ";
 		
 		return helper.selectOne(sql, rs -> {
 			Order order = new Order();
 			
 			order.setNo(rs.getInt("order_no"));
-			order.setUserNo(rs.getInt("user_no"));
+			
+			User user = new User();
+			user.setNo(rs.getInt("user_no"));
+			user.setName(rs.getString("user_name"));
+			
+			order.setUser(user);
 			order.setTitle(rs.getString("order_title"));
 			order.setTotalPrice(rs.getInt("order_total_price"));
 			order.setTotalPayPrice(rs.getInt("order_total_pay_price"));

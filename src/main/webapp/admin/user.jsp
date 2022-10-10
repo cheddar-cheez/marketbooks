@@ -213,7 +213,7 @@
 					 			<thead>
 					 				<tr>
 					 					<th>주문번호</th>
-						   				<th>주문내역</th>
+						   				<th>주문리스트</th>
 						   				<th>수량</th>
 						   				<th>결제금액</th>
 						   				<th>주문상태</th>
@@ -226,8 +226,8 @@
 						 				for (Order order : orderList) {
 						 			%>
 						 				<tr>
-						 					<td><a href=""><%=order.getNo() %></a></td>
-							   				<td><%=order.getTitle() %></td>
+						 					<td><%=order.getNo() %></td>
+							   				<td><a href="userorder.jsp?no=<%=order.getNo()%>"><%=order.getTitle() %></a></td>
 							   				<td><%=order.getTotalQuantity() %></td>
 							   				<td><%=order.getTotalPayPrice() %>원</td>
 							   				<!-- 주문 상태 : 주문취소/입금대기/배송완료/입금대기 -->

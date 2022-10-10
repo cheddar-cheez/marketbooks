@@ -125,7 +125,7 @@
 					   			<tr>
 					   				<th>주문번호</th>
 					   				<th>구매자</th>
-					   				<th>order_title</th>
+					   				<th>주문리스트</th>
 					   				<th>주문수량</th>
 					   				<th>결제금액</th>
 					   				<th>상태</th>
@@ -140,7 +140,7 @@
 					   				<td><%=order.getNo() %></td>
 					   				<!-- 구매자의 이름을 누르면 구매자가 구매한 리스트들을 확인할 수 있다. -->
 					   				<td><a href="user.jsp?no=<%=order.getUserNo()%>"><%=order.getUser().getName() %></a></td>
-					   				<td><%=order.getTitle() %></td>
+					   				<td><a href="userorder.jsp?no=<%=order.getNo()%>"><%=order.getTitle() %></a></td>
 					   				<td><%=order.getTotalQuantity() %></td>
 					   				<td><%=order.getTotalPayPrice() %>원</td>
 					   				<!-- 주문 상태 : 주문취소/입금대기/배송완료/입금대기 -->

@@ -5,6 +5,7 @@ import java.util.List;
 
 import helper.DaoHelper;
 import vo.Book;
+import vo.Category;
 import vo.OrderItem;
 
 public class OrderItemDao {
@@ -27,14 +28,15 @@ public class OrderItemDao {
 	}
 	
 	public List<OrderItem> getOrderItemsByOrderNo(int orderNo) throws SQLException {
-		String sql = "SELECT O.ORDER_ITEM_NO, O.ORDER_NO, "
+		String sql = "SELECT O.ORDER_ITEM_NO, O.ORDER_NO, C.CATEGORY_NAME, "
 					+ "B.BOOK_NO, B.CATEGORY_NO, B.BOOK_TITLE, B.BOOK_AUTHOR, B.BOOK_PUBLISHER, "
 					+ "B.BOOK_DESCRIPTION, B.BOOK_PRICE, B.BOOK_DISCOUNT_PRICE, "
 					+ "B.BOOK_ON_SELL, B.BOOK_STOCK, B.BOOK_DELETED, "
 					+ "O.ORDER_ITEM_PRICE, O.ORDER_ITEM_QUANTITY, O.ORDER_ITEM_CREATED_DATE "
-					+ "FROM HTA_ORDER_ITEMS O, HTA_BOOKS B "
+					+ "FROM HTA_ORDER_ITEMS O, HTA_BOOKS B, HTA_BOOK_CATEGORIES C "
 					+ "WHERE O.ORDER_NO = ? "
-					+ "AND O.BOOK_NO = B.BOOK_NO ";
+					+ "AND O.BOOK_NO = B.BOOK_NO "
+		            + "AND B.CATEGORY_NO = C.CATEGORY_NO ";
 		
 		return helper.selectList(sql, rs -> {
 			OrderItem orderItem = new OrderItem();
@@ -43,7 +45,12 @@ public class OrderItemDao {
 			
 			Book book = new Book();
 			book.setNo(rs.getInt("book_no"));
-			book.setCategoryNo(rs.getInt("category_no"));
+			
+			Category category = new Category();
+			category.setNo(rs.getInt("category_no"));
+			category.setName(rs.getString("category_name"));
+			
+			book.setCategory(category);
 			book.setTitle(rs.getString("book_title"));
 			book.setAuthor(rs.getString("book_author"));
 			book.setPublisher(rs.getString("book_publisher"));

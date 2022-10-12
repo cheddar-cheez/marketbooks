@@ -48,7 +48,7 @@
 	// 요청객체에서 조회할 주문번호를 획득 : 주문정보가 NULL이거나 사용자번호가 불일치할 경우 예외를 던진다.
 	int orderNo = StringUtil.stringToInt(request.getParameter("orderNo"));
 	Order order = orderDao.getOrderByNo(orderNo);
-	if (order == null || order.getUserNo() != userNo) {
+	if (order == null || order.getUser().getNo() != userNo) {
 		throw new RuntimeException("주문정보가 올바르지 않습니다.");
 	}
 	

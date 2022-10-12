@@ -33,7 +33,7 @@
 		throw new RuntimeException("요청 정보가 올바르지 않습니다.");
 	}
 	
-	if (order.getUserNo() != userNo) {
+	if (order.getUser().getNo() != userNo) {
 		throw new RuntimeException("요청 정보가 올바르지 않습니다.");
 	}
 
